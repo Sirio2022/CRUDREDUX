@@ -1,6 +1,27 @@
+import { useEffect } from "react";
 import { Fragment } from "react";
+import Producto from "./Producto";
+
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { obtenerProductosAction } from "../actions/productoActions";
 
 export default function Productos() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    // Consultar la API
+    const cargarProductos = () => dispatch(obtenerProductosAction());
+    cargarProductos();
+  }, []);
+
+  // Obtener el state
+
+  const productos = useSelector( state => state.productos.productos)
+  console.log(productos);
+
   return (
     <Fragment>
       <h2 className="text-center my-5">Listado de Productos</h2>
@@ -16,7 +37,14 @@ export default function Productos() {
             </thead>
 
             <tbody>
-                
+                {productos.length === 0 ? 'No hay productos' : (
+                  productos.map( (producto) => (
+                    <Producto 
+                      key={producto.id}
+                      producto={producto}
+                    />
+                  ))
+                )}
             </tbody>
         </table>
     </Fragment>
