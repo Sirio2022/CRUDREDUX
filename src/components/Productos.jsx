@@ -13,7 +13,7 @@ export default function Productos() {
     // Consultar la API
     const cargarProductos = () => dispatch(obtenerProductosAction());
     cargarProductos();
-  }, []);
+  }, [dispatch]);
 
   // Obtener el state
 
